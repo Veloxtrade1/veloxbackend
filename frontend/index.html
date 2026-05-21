@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELOX — AI-Powered Trading Platform for South Asia & Global</title>
+<meta name="description" content="Velox — Trade Forex, Stocks, Crypto, Commodities and Indices with ultra-low spreads, lightning execution and 1:2000 leverage. Regulated. Trusted. Award-winning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #060810;
+  --bg2:       #090c16;
+  --bg3:       #0d1220;
+  --bg4:       #101d30;
+  --cyan:      #3b82f6;
+  --cyan2:     #60a5fa;
+  --cyang:     rgba(59,130,246,0.12);
+  --gold:      #f0b429;
+  --green:     #00d68f;
+  --red:       #ff4560;
+  --purple:    #8b5cf6;
+  --w:         #ffffff;
+  --w80:       rgba(255,255,255,0.80);
+  --w50:       rgba(255,255,255,0.50);
+  --w20:       rgba(255,255,255,0.20);
+  --w08:       rgba(255,255,255,0.08);
+  --w04:       rgba(255,255,255,0.04);
+  --border:    rgba(59,130,246,0.25);
+  --borderd:   rgba(255,255,255,0.09);
+  --shadow:    0 24px 80px rgba(0,0,0,0.7);
+  --shadowc:   0 0 50px rgba(0,212,255,0.18);
+  --r4: 4px; --r8:8px; --r12:12px; --r16:16px; --r24:24px;
+  --font1: 'Outfit', sans-serif;
+  --font2: 'Plus Jakarta Sans', sans-serif;
+  --font3: 'IBM Plex Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--w);font-family:var(--font2);overflow-x:hidden;font-size:15px}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:2px}
+
+/* TYPOGRAPHY */
+h1,h2,h3,h4,h5{font-family:var(--font1);font-weight:700;line-height:1.12}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r12);font-family:var(--font1);font-size:14px;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:all .25s;letter-spacing:.03em;white-space:nowrap}
+.btn-p{background:var(--cyan);color:var(--bg);box-shadow:0 0 24px rgba(0,212,255,.35)}
+.btn-p:hover{background:#33ddff;box-shadow:0 0 40px rgba(0,212,255,.55);transform:translateY(-2px)}
+.btn-o{background:transparent;color:var(--cyan);border:1px solid var(--cyan)}
+.btn-o:hover{background:var(--cyang);transform:translateY(-2px)}
+.btn-g{background:var(--gold);color:var(--bg);box-shadow:0 0 24px rgba(240,180,41,.35)}
+.btn-g:hover{background:#f5c030;transform:translateY(-2px)}
+.btn-sm{padding:8px 18px;font-size:13px}
+.btn-lg{padding:15px 38px;font-size:16px}
+
+/* LABELS */
+.eyebrow{font-family:var(--font3);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--cyan)}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.tgc{background:var(--cyang);color:var(--cyan);border:1px solid var(--border)}
+.tgg{background:rgba(0,214,143,.1);color:var(--green);border:1px solid rgba(0,214,143,.3)}
+.tgr{background:rgba(255,69,96,.1);color:var(--red);border:1px solid rgba(255,69,96,.3)}
+.tgo{background:rgba(240,180,41,.1);color:var(--gold);border:1px solid rgba(240,180,41,.3)}
+.up{color:var(--green)}
+.dn{color:var(--red)}
+.glow-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.4)}}
+
+/* GLASS */
+.glass{background:rgba(12,21,36,.65);backdrop-filter:blur(24px);border:1px solid var(--borderd)}
+
+/* ═══════ NAV ═══════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(4,9,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--borderd)}
+.logo{font-family:var(--font1);font-size:24px;font-weight:800;text-decoration:none;color:var(--w);display:flex;align-items:center;gap:8px;letter-spacing:-.01em}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--cyan),#006e8a);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:var(--bg)}
+.logo em{color:var(--cyan);font-style:normal}
+.nav-mid{display:flex;align-items:center;gap:2px}
+.nav-a{padding:8px 14px;border-radius:var(--r8);font-size:14px;font-weight:500;color:var(--w80);text-decoration:none;cursor:pointer;transition:all .2s}
+.nav-a:hover{color:var(--w);background:var(--w08)}
+.nav-live{display:flex;align-items:center;gap:20px;padding:0 20px;border-left:1px solid var(--borderd);border-right:1px solid var(--borderd)}
+.nlive{display:flex;align-items:center;gap:7px;font-family:var(--font3);font-size:11.5px}
+.nlive-sym{color:var(--w50)}
+.nlive-price{color:var(--w)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+
+/* ═══════ HERO ═══════ */
+#hero{min-height:100vh;padding:100px 80px 70px;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 70% at 62% 48%,rgba(0,212,255,.08) 0%,transparent 70%),radial-gradient(ellipse 40% 50% at 5% 85%,rgba(240,180,41,.05) 0%,transparent 60%),linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.03) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 90% 90% at 60% 40%,black 20%,transparent 80%)}
+.hero-inner{position:relative;z-index:1;max-width:640px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.22);font-size:12px;font-weight:500;color:var(--cyan);margin-bottom:26px}
+h1.ht{font-size:clamp(42px,5.5vw,74px);font-weight:800;line-height:1.04;margin-bottom:22px;letter-spacing:-.02em}
+h1.ht .ac{color:var(--cyan)}
+h1.ht .ag{color:var(--gold)}
+.hs{font-size:17px;color:var(--w80);line-height:1.72;margin-bottom:36px;font-weight:300;max-width:500px}
+.hcta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:50px}
+.hstats{display:flex;gap:36px;flex-wrap:wrap}
+.hstat-v{font-family:var(--font1);font-size:28px;font-weight:800;letter-spacing:-.01em}
+.hstat-v span{color:var(--cyan)}
+.hstat-l{font-size:12px;color:var(--w50);margin-top:1px}
+
+/* Hero card */
+.hero-card-wrap{position:absolute;right:72px;top:50%;transform:translateY(-50%);width:400px;z-index:2}
+@keyframes float{0%,100%{transform:translateY(-50%) rotate(0deg)}40%{transform:translateY(calc(-50% - 10px)) rotate(.5deg)}70%{transform:translateY(calc(-50% - 5px)) rotate(-.3deg)}}
+.hero-card-wrap{animation:float 7s ease-in-out infinite}
+.hcard{background:rgba(8,15,26,.95);border:1px solid var(--border);border-radius:var(--r24);padding:22px;backdrop-filter:blur(30px);box-shadow:var(--shadow),var(--shadowc)}
+.hcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.hinstr{font-family:var(--font1);font-size:17px;font-weight:700}
+.hprice{font-family:var(--font3);font-size:26px;font-weight:500}
+.hchange{font-family:var(--font3);font-size:12px;margin-top:2px}
+
+/* Chart */
+.chart-wrap{height:90px;margin:10px 0 16px;position:relative}
+.chart-wrap svg{width:100%;height:100%}
+
+/* Order form */
+.otabs{display:flex;gap:0;margin-bottom:14px}
+.otab{flex:1;padding:9px;text-align:center;font-size:12px;font-weight:700;font-family:var(--font1);cursor:pointer;border:1px solid var(--borderd);transition:all .2s;color:var(--w50)}
+.otab:first-child{border-radius:var(--r8) 0 0 var(--r8)}
+.otab:last-child{border-radius:0 var(--r8) var(--r8) 0}
+.otab.abuy{background:rgba(0,214,143,.14);color:var(--green);border-color:rgba(0,214,143,.4)}
+.otab.asell{background:rgba(255,69,96,.14);color:var(--red);border-color:rgba(255,69,96,.4)}
+.ilab{font-size:10px;font-family:var(--font3);color:var(--w50);letter-spacing:.06em;margin-bottom:5px}
+.inp{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--borderd);border-radius:var(--r8);color:var(--w);font-family:var(--font3);font-size:13px;outline:none;transition:border-color .2s;margin-bottom:10px}
+.inp:focus{border-color:var(--cyan)}
+.lev-row{display:flex;justify-content:space-between;font-size:11px;margin-bottom:12px}
+.lev-row .ll{color:var(--w50)}
+.lev-row .lv{font-family:var(--font3);color:var(--gold);font-weight:500}
+.obg{display:flex;gap:8px}
+.bbuy,.bsell{flex:1;padding:11px;border-radius:var(--r8);font-family:var(--font1);font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+.bbuy{background:rgba(0,214,143,.15);color:var(--green);border:1px solid rgba(0,214,143,.4)}
+.bbuy:hover{background:rgba(0,214,143,.28)}
+.bsell{background:rgba(255,69,96,.15);color:var(--red);border:1px solid rgba(255,69,96,.4)}
+.bsell:hover{background:rgba(255,69,96,.28)}
+
+/* positions mini */
+.pos-mini{margin-top:18px;padding-top:14px;border-top:1px solid var(--borderd)}
+.pos-mini-t{font-size:10px;font-family:var(--font3);color:var(--w50);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.prow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--w04)}
+.pleft{display:flex;align-items:center;gap:9px}
+.pbadge{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.psym{font-family:var(--font3);font-size:12px;font-weight:500}
+.pside{font-size:10px;color:var(--w50)}
+.ppnl{font-family:var(--font3);font-size:13px;font-weight:600}
+
+/* ═══════ TICKER STRIP ═══════ */
+.strip{background:var(--bg2);border-top:1px solid var(--borderd);border-bottom:1px solid var(--borderd);overflow:hidden;padding:11px 0}
+.strip-scroll{display:flex;animation:scroll 28s linear infinite;width:max-content}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.scell{display:flex;align-items:center;gap:9px;padding:0 28px;border-right:1px solid var(--borderd);white-space:nowrap}
+.sname{font-family:var(--font3);font-size:12px;font-weight:600}
+.sprice{font-family:var(--font3);font-size:12px;color:var(--w80)}
+.schg{font-family:var(--font3);font-size:10px;padding:2px 7px;border-radius:4px}
+.cup{background:rgba(0,214,143,.14);color:var(--green)}
+.cdn{background:rgba(255,69,96,.14);color:var(--red)}
+
+/* ═══════ SECTIONS ═══════ */
+.sec{padding:100px 80px}
+.sec-alt{background:var(--bg2)}
+.sh{margin-bottom:56px}
+.sh h2{font-size:clamp(30px,3.8vw,50px);margin:12px 0 16px}
+.sh p{font-size:16px;color:var(--w80);max-width:540px;font-weight:300;line-height:1.78}
+
+/* MARKETS */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.mc{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r16);padding:26px 22px;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,var(--cyang),transparent 60%);opacity:0;transition:opacity .3s}
+.mc:hover{border-color:var(--border);transform:translateY(-4px);box-shadow:var(--shadowc)}
+.mc:hover::before{opacity:1}
+.mc-icon{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.ifc{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2)}
+.ist{background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.2)}
+.icr{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2)}
+.ico{background:rgba(0,214,143,.1);border:1px solid rgba(0,214,143,.2)}
+.iin{background:rgba(255,69,96,.1);border:1px solid rgba(255,69,96,.2)}
+.iet{background:rgba(240,140,0,.1);border:1px solid rgba(240,140,0,.2)}
+.ibo{background:rgba(100,200,255,.1);border:1px solid rgba(100,200,255,.2)}
+.iso{background:rgba(255,100,180,.1);border:1px solid rgba(255,100,180,.2)}
+.mc h3{font-size:16px;margin-bottom:7px}
+.mc p{font-size:12px;color:var(--w50);line-height:1.6;margin-bottom:16px}
+.mc-stats{display:flex;gap:14px}
+.ms{font-family:var(--font3);font-size:10px;color:var(--w50)}
+.ms strong{display:block;font-size:13px;color:var(--w);margin-bottom:1px}
+.mc-link{font-size:11px;color:var(--cyan);font-weight:600;text-decoration:none;display:flex;align-items:center;gap:5px;margin-top:14px;transition:gap .2s}
+.mc-link:hover{gap:9px}
+
+/* FEATURES */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.fc{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r16);padding:30px;display:flex;gap:18px;transition:all .3s}
+.fc:hover{border-color:var(--border);transform:translateY(-2px)}
+.fi{flex-shrink:0;width:50px;height:50px;border-radius:13px;background:var(--cyang);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px}
+.ft h3{font-size:16px;margin-bottom:7px}
+.ft p{font-size:13px;color:var(--w80);line-height:1.7;font-weight:300}
+.ft .fb{margin-top:10px}
+
+/* ACCOUNTS */
+.agrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ac{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r24);padding:34px 26px;position:relative;overflow:hidden;transition:all .3s}
+.ac.feat{border-color:var(--cyan);background:linear-gradient(160deg,rgba(0,212,255,.07),var(--bg3) 60%);box-shadow:var(--shadowc)}
+.ac:hover{transform:translateY(-4px)}
+.ac-badge{position:absolute;top:18px;right:18px;padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.ac-badge.pop{background:var(--cyan);color:var(--bg)}
+.ac-badge.pro{background:var(--gold);color:var(--bg)}
+.atype{font-family:var(--font3);font-size:10px;color:var(--cyan);letter-spacing:.1em;margin-bottom:7px}
+.ac h3{font-size:22px;margin-bottom:4px}
+.ac-min{font-family:var(--font3);font-size:12px;color:var(--w50);margin-bottom:22px}
+.ac-min strong{font-size:30px;color:var(--w);display:block;font-family:var(--font1);margin-bottom:1px}
+.ac-feats{list-style:none;margin-bottom:26px}
+.ac-feats li{padding:8px 0;border-bottom:1px solid var(--borderd);font-size:13px;color:var(--w80);display:flex;justify-content:space-between;align-items:center}
+.ac-feats li:last-child{border:none}
+.ac-feats li .v{font-family:var(--font3);font-size:12px;color:var(--w);font-weight:500}
+.ac-feats li .v.g{color:var(--green)}
+
+/* SOCIAL */
+.slayout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.tlist{display:flex;flex-direction:column;gap:12px}
+.tc{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r16);padding:16px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;cursor:pointer}
+.tc:hover{border-color:var(--border);transform:translateX(4px)}
+.tav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0;border:2px solid var(--borderd)}
+.tinfo{flex:1}
+.tname{font-size:14px;font-weight:600;margin-bottom:1px}
+.tmeta{font-size:11px;color:var(--w50)}
+.tstats{text-align:right}
+.troi{font-family:var(--font3);font-size:15px;font-weight:600}
+.tcopiers{font-family:var(--font3);font-size:10px;color:var(--w50)}
+.cbtn{padding:6px 13px;border-radius:var(--r8);background:var(--cyang);border:1px solid var(--border);color:var(--cyan);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font1);transition:all .2s}
+.cbtn:hover{background:rgba(0,212,255,.22)}
+
+/* PAYMENTS */
+.pgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:36px}
+.pc{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r12);padding:16px 10px;text-align:center;transition:all .3s;cursor:pointer}
+.pc:hover{border-color:var(--border);transform:translateY(-2px)}
+.pc-icon{font-size:22px;margin-bottom:7px}
+.pc-name{font-size:11px;font-weight:600;color:var(--w80)}
+.pc-fee{font-size:10px;color:var(--green);font-family:var(--font3);margin-top:2px}
+.pinfo{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.picard{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r12);padding:22px 18px;text-align:center}
+.picard .big{font-family:var(--font1);font-size:24px;font-weight:800;color:var(--cyan)}
+.picard .lbl{font-size:12px;color:var(--w50);margin-top:4px}
+
+/* TRUST */
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.tcard{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r12);padding:22px;text-align:center}
+.tcard-icon{font-size:30px;margin-bottom:10px}
+.tcard h4{font-size:14px;margin-bottom:6px}
+.tcard p{font-size:12px;color:var(--w50)}
+.tyear{font-family:var(--font3);font-size:11px;color:var(--cyan);margin-top:7px}
+.regs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:36px}
+.reg{padding:9px 18px;border-radius:var(--r12);background:var(--bg3);border:1px solid var(--borderd);font-size:12px;font-weight:600;color:var(--w80);display:flex;align-items:center;gap:7px}
+
+/* TOOLS */
+.togrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tocard{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r16);padding:26px;text-align:center;transition:all .3s}
+.tocard:hover{border-color:var(--border);transform:translateY(-3px);box-shadow:var(--shadowc)}
+.to-icon{font-size:34px;margin-bottom:14px}
+.tocard h3{font-size:15px;margin-bottom:7px}
+.tocard p{font-size:13px;color:var(--w50);line-height:1.65}
+
+/* ACADEMY */
+.acgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.accard{background:var(--bg3);border:1px solid var(--borderd);border-radius:var(--r16);overflow:hidden;transition:all .3s;cursor:pointer}
+.accard:hover{border-color:var(--border);transform:translateY(-3px)}
+.acthumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:44px}
+.acbody{padding:20px}
+.actag{margin-bottom:9px}
+.accard h3{font-size:15px;margin-bottom:7px}
+.accard p{font-size:13px;color:var(--w80);line-height:1.6;margin-bottom:12px}
+.acmeta{display:flex;justify-content:space-between;font-size:11px;color:var(--w50)}
+
+/* CTA */
+.ctab{margin:0 80px;border-radius:var(--r24);padding:76px;background:linear-gradient(135deg,var(--bg3),rgba(0,212,255,.06) 50%,var(--bg3));border:1px solid var(--border);text-align:center;position:relative;overflow:hidden}
+.ctab::before{content:'VELOX';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font1);font-size:200px;font-weight:800;color:rgba(0,212,255,.025);pointer-events:none;white-space:nowrap}
+.ctab h2{font-size:clamp(28px,3.8vw,50px);margin:12px 0 16px}
+.ctab p{font-size:16px;color:var(--w80);margin-bottom:34px;max-width:480px;margin-left:auto;margin-right:auto}
+.ctab-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+/* FOOTER */
+footer{background:var(--bg2);border-top:1px solid var(--borderd);padding:66px 80px 36px}
+.footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1fr;gap:36px;margin-bottom:52px}
+.fbrand p{font-size:13px;color:var(--w50);line-height:1.85;margin:16px 0 22px;max-width:270px}
+.fsoc{display:flex;gap:8px}
+.sbtn{width:34px;height:34px;border-radius:var(--r8);background:var(--w08);border:1px solid var(--borderd);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;text-decoration:none;transition:all .2s}
+.sbtn:hover{background:var(--cyang);border-color:var(--border)}
+.fcol h5{font-family:var(--font1);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+.fcol a{display:block;font-size:13px;color:var(--w50);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.fcol a:hover{color:var(--w)}
+.fbot{border-top:1px solid var(--borderd);padding-top:26px;display:flex;justify-content:space-between;align-items:flex-start;gap:36px}
+.flegal{font-size:11px;color:var(--w50);line-height:1.85;max-width:680px}
+.fcopy{font-size:12px;color:var(--w50);white-space:nowrap;text-align:right}
+
+/* ═══════ MODALS ═══════ */
+.moverlay{position:fixed;inset:0;z-index:1800;background:rgba(4,9,15,.93);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:20px}
+.moverlay.on{display:flex}
+.mbox{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r24);padding:44px 40px;width:100%;max-width:460px;position:relative;box-shadow:var(--shadow)}
+.mclose{position:absolute;top:18px;right:18px;width:30px;height:30px;border-radius:var(--r8);background:var(--w08);border:none;color:var(--w80);font-size:17px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.mclose:hover{background:var(--w20)}
+.mlogo{font-family:var(--font1);font-size:21px;font-weight:800;margin-bottom:6px}
+.mlogo em{color:var(--cyan);font-style:normal}
+.msub{font-size:13px;color:var(--w50);margin-bottom:28px}
+.mtabs{display:flex;margin-bottom:26px}
+.mtab{flex:1;padding:10px;text-align:center;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font1);border:1px solid var(--borderd);transition:all .2s;color:var(--w50)}
+.mtab:first-child{border-radius:var(--r8) 0 0 var(--r8)}
+.mtab:last-child{border-radius:0 var(--r8) var(--r8) 0}
+.mtab.on{background:var(--cyan);color:var(--bg);border-color:var(--cyan)}
+.fg{margin-bottom:14px}
+.fl{font-size:12px;font-weight:600;letter-spacing:.04em;margin-bottom:6px;display:block;color:var(--w80)}
+.fi2{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--borderd);border-radius:var(--r8);color:var(--w);font-family:var(--font2);font-size:14px;outline:none;transition:border-color .2s}
+.fi2:focus{border-color:var(--cyan)}
+.fi2::placeholder{color:var(--w50)}
+.frow{display:flex;gap:10px}
+.frow .fg{flex:1}
+.fchk{display:flex;align-items:flex-start;gap:8px;margin-bottom:18px}
+.fchk input{margin-top:3px;accent-color:var(--cyan)}
+.fchk label{font-size:11px;color:var(--w50);line-height:1.6}
+.fchk a{color:var(--cyan);text-decoration:none}
+.fdiv{text-align:center;font-size:12px;color:var(--w50);margin:16px 0;display:flex;align-items:center;gap:10px}
+.fdiv::before,.fdiv::after{content:'';flex:1;height:1px;background:var(--borderd)}
+.soclogins{display:flex;gap:8px}
+.slogin{flex:1;padding:10px;border-radius:var(--r8);background:var(--w08);border:1px solid var(--borderd);color:var(--w80);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.slogin:hover{background:var(--w20)}
+.forgotlink{font-size:12px;color:var(--cyan);cursor:pointer;text-align:right;margin-bottom:4px;display:block}
+.steps{display:flex;gap:6px;align-items:center;margin-bottom:22px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--borderd)}
+.sdot.a{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.sdot.d{background:var(--green)}
+.slabel{font-size:11px;font-family:var(--font3);color:var(--w50);margin-left:4px}
+
+/* DEPOSIT MODAL */
+.dmethods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.dm{padding:13px;border-radius:var(--r12);border:1px solid var(--borderd);text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.dm:hover,.dm.sel{border-color:var(--cyan);background:var(--cyang)}
+.dm-icon{font-size:20px;margin-bottom:5px}
+.dm-name{font-size:11px;font-weight:600}
+.dm-time{font-size:10px;color:var(--w50);font-family:var(--font3)}
+
+/* NOTIFICATION */
+.notif{position:fixed;bottom:24px;right:24px;z-index:3000;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r12);padding:14px 18px;display:flex;align-items:center;gap:11px;box-shadow:var(--shadow);transform:translateX(130%);transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:310px}
+.notif.show{transform:translateX(0)}
+.notif-ico{font-size:17px;flex-shrink:0}
+.notif-t{font-size:14px;font-weight:600;margin-bottom:2px}
+.notif-m{font-size:12px;color:var(--w50)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .65s ease both}
+.fu1{animation-delay:.1s;opacity:0}
+.fu2{animation-delay:.2s;opacity:0}
+.fu3{animation-delay:.3s;opacity:0}
+@keyframes priceFlash{0%{opacity:1}50%{opacity:.35;background:rgba(0,212,255,.08);border-radius:3px}100%{opacity:1}}
+.pfl{animation:priceFlash .38s ease}
+
+/* RESPONSIVE */
+@media(max-width:1200px){.hero-card-wrap{display:none}.mgrid{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.agrid{grid-template-columns:1fr}.slayout{grid-template-columns:1fr}.togrid{grid-template-columns:1fr 1fr}.pgrid{grid-template-columns:repeat(3,1fr)}.tgrid{grid-template-columns:1fr 1fr}.acgrid{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:0 18px}.nav-mid,.nav-live{display:none}#hero{padding:96px 22px 56px}.sec{padding:56px 22px}.ctab{margin:0 22px;padding:44px 24px}footer{padding:44px 22px 28px}.mgrid,.togrid,.pgrid,.acgrid{grid-template-columns:1fr}.tgrid{grid-template-columns:1fr}.pinfo{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr}.mbox{padding:30px 22px}.frow{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mark">V</div>
+    Vel<em>ox</em>
+  </a>
+  <nav class="nav-mid">
+    <span class="nav-a" onclick="ss('markets')">Markets</span>
+    <span class="nav-a" onclick="ss('platforms')">Platforms</span>
+    <span class="nav-a" onclick="ss('accounts')">Accounts</span>
+    <span class="nav-a" onclick="ss('social')">Social Trading</span>
+    <span class="nav-a" onclick="ss('payments')">Deposit/Withdraw</span>
+    <span class="nav-a" onclick="ss('academy')">Academy</span>
+  </nav>
+  <div class="nav-live">
+    <div class="nlive"><span class="nlive-sym">EUR/USD</span><span class="nlive-price" id="n1">1.08432</span><span class="up" id="n1c" style="font-family:var(--font3);font-size:11px">+0.12%</span></div>
+    <div class="nlive"><span class="nlive-sym">XAU/USD</span><span class="nlive-price" id="n2">2,314.50</span><span class="up" id="n2c" style="font-family:var(--font3);font-size:11px">+0.88%</span></div>
+    <div class="nlive"><span class="nlive-sym">BTC</span><span class="nlive-price" id="n3">67,842</span><span class="dn" id="n3c" style="font-family:var(--font3);font-size:11px">−0.43%</span></div>
+  </div>
+  <div class="nav-actions">
+    <button class="btn btn-o btn-sm" onclick="om('login')">Sign In</button>
+    <button class="btn btn-p btn-sm" onclick="om('signup')">Open Account</button>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge fu"><span class="glow-dot"></span> Live · Multi-Asset Trading · Est. 2019</div>
+    <h1 class="ht fu fu1">Trade the World's<br><span class="ac">Financial Markets</span><br>with <span class="ag">Velocity.</span></h1>
+    <p class="hs fu fu2">Velox gives traders access to Forex, Stocks, Crypto, Commodities &amp; Indices — ultra-low spreads, 25ms execution, 1:2000 leverage, social copy-trading and AI signals. One account. Every market. Zero limits.</p>
+    <div class="hcta fu fu3">
+      <button class="btn btn-p btn-lg" onclick="om('signup')">Start Trading Free <span>→</span></button>
+      <button class="btn btn-o btn-lg" onclick="om('demo')">Try Free Demo</button>
+    </div>
+    <div class="hstats fu fu3">
+      <div><div class="hstat-v">$<span>6.8</span>B+</div><div class="hstat-l">Daily Trading Volume</div></div>
+      <div><div class="hstat-v"><span>1.2</span>M+</div><div class="hstat-l">Active Traders</div></div>
+      <div><div class="hstat-v"><span>140</span>+</div><div class="hstat-l">Countries</div></div>
+      <div><div class="hstat-v"><span>2,500</span>+</div><div class="hstat-l">Instruments</div></div>
+    </div>
+  </div>
+
+  <!-- LIVE TRADING CARD -->
+  <div class="hero-card-wrap">
+    <div class="hcard">
+      <div class="hcard-top">
+        <div><div class="hinstr">EUR / USD</div><div style="font-size:10px;color:var(--w50);font-family:var(--font3)">FOREX · MAJOR</div></div>
+        <div><div class="hprice up" id="cp">1.08432</div><div class="hchange up" id="cc">▲ +0.12%</div></div>
+      </div>
+      <div class="chart-wrap">
+        <svg id="lvchart" viewBox="0 0 380 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00d4ff" stop-opacity=".18"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/></linearGradient></defs>
+          <path id="cfill" d="" fill="url(#cg)"/>
+          <path id="cline" d="" fill="none" stroke="#00d4ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle id="cdot" r="3.5" fill="#00d4ff"/>
+        </svg>
+      </div>
+      <div class="otabs">
+        <div class="otab abuy" id="ot-buy" onclick="setTab('buy')">BUY</div>
+        <div class="otab" id="ot-sell" onclick="setTab('sell')">SELL</div>
+        <div class="otab" id="ot-limit" onclick="setTab('limit')">LIMIT</div>
+      </div>
+      <div class="ilab">AMOUNT (USD)</div>
+      <input class="inp" type="number" value="10000" id="order-amount">
+      <div class="ilab">LOTS</div>
+      <input class="inp" type="number" value="0.10" step="0.01" id="order-lots">
+      <div class="lev-row"><span class="ll">Leverage</span><span class="lv">1:500×</span><span class="ll">Spread</span><span class="lv" style="color:var(--green)">0.6 pips</span></div>
+      <div class="obg">
+        <button class="bbuy" onclick="po('buy')">▲ BUY <span id="bp">1.08437</span></button>
+        <button class="bsell" onclick="po('sell')">▼ SELL <span id="sp">1.08427</span></button>
+      </div>
+      <div class="pos-mini">
+        <div class="pos-mini-t">Open Positions</div>
+        <div class="prow">
+          <div class="pleft"><div class="pbadge" style="background:rgba(0,214,143,.14);color:var(--green)">BUY</div><div><div class="psym">XAU/USD</div><div class="pside">Gold · 0.5 lots</div></div></div>
+          <div class="ppnl up">+$287.40</div>
+        </div>
+        <div class="prow">
+          <div class="pleft"><div class="pbadge" style="background:rgba(255,69,96,.14);color:var(--red)">SELL</div><div><div class="psym">USD/JPY</div><div class="pside">Forex · 0.2 lots</div></div></div>
+          <div class="ppnl dn">−$41.20</div>
+        </div>
+        <div class="prow">
+          <div class="pleft"><div class="pbadge" style="background:rgba(139,92,246,.14);color:var(--purple)">BUY</div><div><div class="psym">BTC/USD</div><div class="pside">Crypto · 0.01</div></div></div>
+          <div class="ppnl up">+$129.80</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TICKER ═══════ -->
+<div class="strip"><div class="strip-scroll" id="ticker"></div></div>
+
+<!-- ═══════ MARKETS ═══════ -->
+<section class="sec" id="markets">
+  <div class="sh"><div class="eyebrow">Markets</div><h2>Trade 2,500+ Instruments<br>Across Every Asset Class</h2><p>From Forex majors to emerging-market stocks, precious metals to DeFi tokens — access every global market from one single account.</p></div>
+  <div class="mgrid">
+    <div class="mc"><div class="mc-icon ifc">💱</div><h3>Forex</h3><p>190+ pairs with the tightest spreads. Majors, minors, exotics — 24/5 trading.</p><div class="mc-stats"><div class="ms"><strong>190+</strong>Pairs</div><div class="ms"><strong>0.0</strong>Min Spread</div><div class="ms"><strong>1:2000</strong>Leverage</div></div><a href="#" class="mc-link">Explore Forex →</a></div>
+    <div class="mc"><div class="mc-icon ist">📈</div><h3>Stocks & Shares</h3><p>500+ CFD stocks: FAANG, UAE, Saudi, EU, Asia — real ownership available.</p><div class="mc-stats"><div class="ms"><strong>500+</strong>Stocks</div><div class="ms"><strong>0%</strong>Commission</div><div class="ms"><strong>1:10</strong>Leverage</div></div><a href="#" class="mc-link">Explore Stocks →</a></div>
+    <div class="mc"><div class="mc-icon icr">₿</div><h3>Cryptocurrencies</h3><p>BTC, ETH, SOL and 200+ altcoins with 24/7 deep liquidity access.</p><div class="mc-stats"><div class="ms"><strong>200+</strong>Coins</div><div class="ms"><strong>24/7</strong>Markets</div><div class="ms"><strong>1:100</strong>Leverage</div></div><a href="#" class="mc-link">Explore Crypto →</a></div>
+    <div class="mc"><div class="mc-icon ico">🛢️</div><h3>Commodities</h3><p>Gold, Silver, Oil, Gas and agricultural products. Hedge and diversify.</p><div class="mc-stats"><div class="ms"><strong>30+</strong>Products</div><div class="ms"><strong>$0.01</strong>Spread</div><div class="ms"><strong>1:500</strong>Leverage</div></div><a href="#" class="mc-link">Explore Commodities →</a></div>
+    <div class="mc"><div class="mc-icon iin">🏛️</div><h3>Indices</h3><p>US30, SPX500, NAS100, DAX40, FTSE100 and 75+ global benchmarks.</p><div class="mc-stats"><div class="ms"><strong>80+</strong>Indices</div><div class="ms"><strong>0.4</strong>Min Spread</div><div class="ms"><strong>1:200</strong>Leverage</div></div><a href="#" class="mc-link">Explore Indices →</a></div>
+    <div class="mc"><div class="mc-icon iet">📊</div><h3>ETFs</h3><p>300+ exchange-traded funds across tech, energy, healthcare, emerging markets.</p><div class="mc-stats"><div class="ms"><strong>300+</strong>ETFs</div><div class="ms"><strong>0%</strong>Mgmt Fee</div><div class="ms"><strong>1:5</strong>Leverage</div></div><a href="#" class="mc-link">Explore ETFs →</a></div>
+    <div class="mc"><div class="mc-icon ibo">📜</div><h3>Bonds & Rates</h3><p>US Treasuries, Bunds, Gilts and sovereign debt instruments worldwide.</p><div class="mc-stats"><div class="ms"><strong>40+</strong>Bonds</div><div class="ms"><strong>Low</strong>Volatility</div><div class="ms"><strong>Daily</strong>Yields</div></div><a href="#" class="mc-link">Explore Bonds →</a></div>
+    <div class="mc"><div class="mc-icon iso">👥</div><h3>Social Trading</h3><p>AutoCopy top traders instantly. Learn from experts while earning.</p><div class="mc-stats"><div class="ms"><strong>12K+</strong>Lead Traders</div><div class="ms"><strong>Auto</strong>Copy</div><div class="ms"><strong>$500</strong>Min</div></div><a href="#" class="mc-link">Explore Social →</a></div>
+  </div>
+</section>
+
+<!-- ═══════ WHY VELOX ═══════ -->
+<section class="sec sec-alt" id="features">
+  <div class="sh"><div class="eyebrow">Why Velox</div><h2>Built for Traders Who<br>Demand the Best</h2><p>Every feature engineered by traders, for traders. Precision. Speed. Security. Intelligence.</p></div>
+  <div class="fgrid">
+    <div class="fc"><div class="fi">⚡</div><div class="ft"><h3>25ms Execution</h3><p>Orders filled under 25 milliseconds via tier-1 liquidity. Zero requotes. Zero slippage guarantee on market orders.</p><div class="fb"><span class="tag tgg">≤ 25ms avg</span></div></div></div>
+    <div class="fc"><div class="fi">🛡️</div><div class="ft"><h3>Negative Balance Protection</h3><p>You can never lose more than you deposit. Our risk engine auto-closes positions before your balance goes negative.</p><div class="fb"><span class="tag tgc">Fully Protected</span></div></div></div>
+    <div class="fc"><div class="fi">🔒</div><div class="ft"><h3>Segregated Client Funds</h3><p>Client funds held in segregated Tier-1 bank accounts. Completely separate from company capital. Always protected.</p><div class="fb"><span class="tag tgo">Barclays · HSBC · ADCB</span></div></div></div>
+    <div class="fc"><div class="fi">🤖</div><div class="ft"><h3>Velox AI Intelligence</h3><p>Real-time market sentiment, pattern recognition, earnings impact predictions and daily actionable trade signals.</p><div class="fb"><span class="tag tgc">Live Now · Beta</span></div></div></div>
+    <div class="fc"><div class="fi">📱</div><div class="ft"><h3>Native Mobile App</h3><p>Full iOS & Android app. Biometric login, Face ID, push alerts, TradingView charts and one-tap order execution.</p><div class="fb"><span class="tag tgg">iOS & Android</span></div></div></div>
+    <div class="fc"><div class="fi">💰</div><div class="ft"><h3>Instant Withdrawals</h3><p>98% of withdrawals processed instantly 24/7. Cards, crypto, bank transfers — profits accessible in minutes.</p><div class="fb"><span class="tag tgo">Avg 7 minutes</span></div></div></div>
+  </div>
+</section>
+
+<!-- ═══════ ACCOUNTS ═══════ -->
+<section class="sec" id="accounts">
+  <div class="sh"><div class="eyebrow">Accounts</div><h2>Choose Your<br>Trading Account</h2><p>Whether you're just starting or managing millions — Velox has an account optimised for your scale.</p></div>
+  <div class="agrid">
+    <div class="ac">
+      <div class="atype">STANDARD</div><h3>Starter</h3>
+      <div class="ac-min"><strong>$50</strong>Minimum Deposit</div>
+      <ul class="ac-feats">
+        <li>Spreads from <span class="v">1.0 pips</span></li>
+        <li>Max Leverage <span class="v">1:500</span></li>
+        <li>Commission <span class="v g">$0</span></li>
+        <li>Platforms <span class="v">MT4/MT5/Web</span></li>
+        <li>Swap-Free Available <span class="v g">✓</span></li>
+        <li>Demo Account <span class="v g">✓</span></li>
+        <li>24/5 Support <span class="v g">✓</span></li>
+      </ul>
+      <button class="btn btn-o" style="width:100%;justify-content:center" onclick="om('signup')">Open Starter</button>
+    </div>
+    <div class="ac feat">
+      <div class="ac-badge pop">Most Popular</div>
+      <div class="atype">PRO</div><h3>Professional</h3>
+      <div class="ac-min"><strong>$1,000</strong>Minimum Deposit</div>
+      <ul class="ac-feats">
+        <li>Spreads from <span class="v">0.3 pips</span></li>
+        <li>Max Leverage <span class="v">1:2000</span></li>
+        <li>Commission <span class="v">$3.5/lot</span></li>
+        <li>Platforms <span class="v">MT4/MT5/Web</span></li>
+        <li>Swap-Free Available <span class="v g">✓</span></li>
+        <li>Free VPS Hosting <span class="v g">✓</span></li>
+        <li>Dedicated Manager <span class="v g">✓</span></li>
+      </ul>
+      <button class="btn btn-p" style="width:100%;justify-content:center" onclick="om('signup')">Open Pro Account</button>
+    </div>
+    <div class="ac">
+      <div class="ac-badge pro">Elite</div>
+      <div class="atype">INSTITUTIONAL</div><h3>Elite</h3>
+      <div class="ac-min"><strong>$50,000</strong>Minimum Deposit</div>
+      <ul class="ac-feats">
+        <li>Spreads from <span class="v g">0.0 pips</span></li>
+        <li>Max Leverage <span class="v">1:2000</span></li>
+        <li>Commission <span class="v">$1.5/lot</span></li>
+        <li>Platforms <span class="v">All + FIX API</span></li>
+        <li>Prime Liquidity <span class="v g">✓</span></li>
+        <li>Bespoke Solutions <span class="v g">✓</span></li>
+        <li>24/7 Priority <span class="v g">✓</span></li>
+      </ul>
+      <button class="btn btn-g" style="width:100%;justify-content:center" onclick="om('signup')">Open Elite</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PLATFORMS ═══════ -->
+<section class="sec sec-alt" id="platforms">
+  <div class="sh"><div class="eyebrow">Platforms</div><h2>Trade Anywhere,<br>Any Device</h2><p>TRAXO supports MetaTrader 4/5 plus our own WebTrader and mobile app — all integrated in one ecosystem.</p></div>
+  <div class="togrid">
+    <div class="tocard"><div class="to-icon">🌐</div><h3>Velox WebTrader</h3><p>TradingView-powered browser terminal. 100+ indicators, one-click trading, real-time P&L — no download.</p></div>
+    <div class="tocard"><div class="to-icon">📱</div><h3>Velox Mobile App</h3><p>iOS & Android. Biometric login, push alerts, portfolio, social feed and instant order execution.</p></div>
+    <div class="tocard"><div class="to-icon">🖥️</div><h3>MetaTrader 4 / 5</h3><p>Industry standard with EAs, custom indicators, backtesting and algorithmic trading via MQL4/5.</p></div>
+    <div class="tocard"><div class="to-icon">🤖</div><h3>AutoTrader API</h3><p>FIX API & REST API for institutional and algo traders. Ultra-low latency, co-location VPS, WebSocket.</p></div>
+    <div class="tocard"><div class="to-icon">📊</div><h3>AI Analytics</h3><p>Velox AI: sentiment scoring, pattern recognition, earnings predictions and daily trade signals.</p></div>
+    <div class="tocard"><div class="to-icon">📅</div><h3>Economic Calendar</h3><p>Real-time calendar with impact ratings, historical data, consensus and high-impact push notifications.</p></div>
+  </div>
+</section>
+
+<!-- ═══════ SOCIAL TRADING ═══════ -->
+<section class="sec" id="social">
+  <div class="sh"><div class="eyebrow">Social Trading</div><h2>Copy the Best.<br>Earn Like a Pro.</h2><p>Velox AutoCopy mirrors trades of top performers automatically. Set it, forget it, profit from it.</p></div>
+  <div class="slayout">
+    <div>
+      <p style="color:var(--w80);margin-bottom:28px;font-weight:300;line-height:1.82">Join 12,000+ Lead Traders and 1.2M copiers on the Velox Social network. Browse profiles, analyze verified performance history, set custom risk limits, and start copying in under 60 seconds.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
+        <span class="tag tgc">AutoCopy Technology</span>
+        <span class="tag tgo">Custom Risk Controls</span>
+        <span class="tag tgg">Verified Performance</span>
+      </div>
+      <button class="btn btn-p" onclick="om('signup')">Start Copying Now</button>
+    </div>
+    <div class="tlist">
+      <div class="tc"><div class="tav" style="background:rgba(0,212,255,.14);color:var(--cyan)">MK</div><div class="tinfo"><div class="tname">Marcus Klein</div><div class="tmeta">Forex Specialist · 4.2 yrs · Risk: Low</div></div><div class="tstats"><div class="troi up">+284.3%</div><div class="tcopiers">8,421 copiers</div></div><button class="cbtn">Copy</button></div>
+      <div class="tc"><div class="tav" style="background:rgba(240,180,41,.14);color:var(--gold)">SA</div><div class="tinfo"><div class="tname">Sofia Alhamed</div><div class="tmeta">Crypto & Gold · 2.8 yrs · Risk: Med</div></div><div class="tstats"><div class="troi up">+421.7%</div><div class="tcopiers">12,304 copiers</div></div><button class="cbtn">Copy</button></div>
+      <div class="tc"><div class="tav" style="background:rgba(0,214,143,.14);color:var(--green)">JR</div><div class="tinfo"><div class="tname">James Reeve</div><div class="tmeta">Indices & Stocks · 6 yrs · Risk: Low</div></div><div class="tstats"><div class="troi up">+187.9%</div><div class="tcopiers">5,837 copiers</div></div><button class="cbtn">Copy</button></div>
+      <div class="tc"><div class="tav" style="background:rgba(139,92,246,.14);color:var(--purple)">LN</div><div class="tinfo"><div class="tname">Luna Nakamura</div><div class="tmeta">Multi-Asset · 3.5 yrs · Risk: Med-Hi</div></div><div class="tstats"><div class="troi up">+562.1%</div><div class="tcopiers">21,042 copiers</div></div><button class="cbtn">Copy</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PAYMENTS ═══════ -->
+<section class="sec sec-alt" id="payments">
+  <div class="sh"><div class="eyebrow">Deposit & Withdrawal</div><h2>Fast, Free,<br>Flexible Funding</h2><p>20+ payment methods. Most processed instantly, zero hidden fees, complete transparency.</p></div>
+  <div class="pgrid">
+    <div class="pc"><div class="pc-icon">💳</div><div class="pc-name">Visa/Mastercard</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🏦</div><div class="pc-name">Bank Wire</div><div class="pc-fee">1-3 days · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🅿️</div><div class="pc-name">PayPal</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">₿</div><div class="pc-name">Bitcoin</div><div class="pc-fee">~10 min · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🔷</div><div class="pc-name">USDT TRC20</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🌐</div><div class="pc-name">Neteller</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">💸</div><div class="pc-name">Skrill</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🅰️</div><div class="pc-name">Apple Pay</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🅶</div><div class="pc-name">Google Pay</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🔶</div><div class="pc-name">Ethereum</div><div class="pc-fee">~2 min · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🏪</div><div class="pc-name">Perfect Money</div><div class="pc-fee">Instant · 0%</div></div>
+    <div class="pc"><div class="pc-icon">🌺</div><div class="pc-name">Local Methods</div><div class="pc-fee">Varies · 0%</div></div>
+  </div>
+  <div class="pinfo">
+    <div class="picard"><div class="big">$10</div><div class="lbl">Minimum Deposit</div></div>
+    <div class="picard"><div class="big">7 min</div><div class="lbl">Avg Withdrawal</div></div>
+    <div class="picard"><div class="big">0%</div><div class="lbl">All Fees</div></div>
+    <div class="picard"><div class="big">24/7</div><div class="lbl">Processing</div></div>
+  </div>
+  <div style="text-align:center;margin-top:32px">
+    <button class="btn btn-p btn-lg" onclick="om('deposit')">Deposit Funds Now</button>
+  </div>
+</section>
+
+<!-- ═══════ TRUST ═══════ -->
+<section class="sec" id="regulation">
+  <div class="sh"><div class="eyebrow">Trust & Regulation</div><h2>Regulated. Trusted.<br>Award-Winning.</h2><p>Velox operates under multiple Tier-1 licenses across 4 continents.</p></div>
+  <div class="tgrid">
+    <div class="tcard"><div class="tcard-icon">🥇</div><h4>Best Forex Broker</h4><p>Global Finance Awards</p><div class="tyear">2025</div></div>
+    <div class="tcard"><div class="tcard-icon">🏆</div><h4>Best Trading Platform</h4><p>Forex Magnates Summit</p><div class="tyear">2024</div></div>
+    <div class="tcard"><div class="tcard-icon">⭐</div><h4>Best Customer Service</h4><p>UK Forex Awards</p><div class="tyear">2024</div></div>
+    <div class="tcard"><div class="tcard-icon">🌐</div><h4>Best Mobile App</h4><p>European CEO Magazine</p><div class="tyear">2025</div></div>
+  </div>
+  <div class="regs">
+    <div class="reg">🇬🇧 FCA — United Kingdom</div>
+    <div class="reg">🇨🇾 CySEC — Cyprus</div>
+    <div class="reg">🇦🇪 ADGM — Abu Dhabi UAE</div>
+    <div class="reg">🇿🇦 FSCA — South Africa</div>
+    <div class="reg">🇧🇸 SCB — Bahamas</div>
+    <div class="reg">🇦🇺 ASIC — Australia</div>
+  </div>
+</section>
+
+<!-- ═══════ ACADEMY ═══════ -->
+<section class="sec sec-alt" id="academy">
+  <div class="sh"><div class="eyebrow">Velox Academy</div><h2>Learn. Grow.<br>Trade Confidently.</h2><p>500+ lessons, webinars and market analysis — from total beginner to advanced algo trader.</p></div>
+  <div class="acgrid">
+    <div class="accard"><div class="acthumb" style="background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(0,80,110,.2))">📖</div><div class="acbody"><div class="actag"><span class="tag tgc">Beginner</span></div><h3>Forex Trading Fundamentals</h3><p>Master currency pairs, pip values, lot sizes and how global forex markets operate.</p><div class="acmeta"><span>⏱ 45 min</span><span>4.9 ★ (2.3K)</span></div></div></div>
+    <div class="accard"><div class="acthumb" style="background:linear-gradient(135deg,rgba(240,180,41,.1),rgba(140,100,0,.2))">📊</div><div class="acbody"><div class="actag"><span class="tag tgo">Intermediate</span></div><h3>Technical Analysis Mastery</h3><p>Chart patterns, RSI, MACD, Fibonacci — everything for professional price action reading.</p><div class="acmeta"><span>⏱ 2.5 hrs</span><span>4.8 ★ (4.1K)</span></div></div></div>
+    <div class="accard"><div class="acthumb" style="background:linear-gradient(135deg,rgba(0,214,143,.1),rgba(0,100,60,.2))">🤖</div><div class="acbody"><div class="actag"><span class="tag tgg">Advanced</span></div><h3>Algo Trading with MQL5</h3><p>Build Expert Advisors, backtest strategies and automate trading on MetaTrader 5.</p><div class="acmeta"><span>⏱ 8 hrs</span><span>4.7 ★ (890)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section style="padding:80px 0">
+  <div class="ctab">
+    <div class="eyebrow" style="justify-content:center">Get Started</div>
+    <h2>Open Your Account<br>in Under 5 Minutes</h2>
+    <p>Join 1.2M+ traders. Start with a free $10,000 demo or live account from just $50.</p>
+    <div class="ctab-btns">
+      <button class="btn btn-p btn-lg" onclick="om('signup')">Create Live Account</button>
+      <button class="btn btn-o btn-lg" onclick="om('demo')">Try Free Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="fbrand">
+      <div class="logo" style="text-decoration:none;margin-bottom:4px"><div class="logo-mark">V</div>Vel<em style="color:var(--cyan);font-style:normal">ox</em></div>
+      <p>Velox is a multi-asset online trading platform regulated across 6 jurisdictions. We provide access to Forex, Stocks, Crypto, Commodities and Indices for traders in 140+ countries.</p>
+      <div class="fsoc">
+        <a class="sbtn">𝕏</a><a class="sbtn">in</a><a class="sbtn">f</a><a class="sbtn">▶</a><a class="sbtn">📸</a>
+      </div>
+    </div>
+    <div class="fcol"><h5>Markets</h5><a href="#">Forex</a><a href="#">Stocks</a><a href="#">Crypto</a><a href="#">Commodities</a><a href="#">Indices</a><a href="#">ETFs</a><a href="#">Bonds</a></div>
+    <div class="fcol"><h5>Trading</h5><a href="#">Accounts</a><a href="#">Platforms</a><a href="#">Social Trading</a><a href="#">Deposit/Withdraw</a><a href="#">Economic Calendar</a><a href="#">VPS Hosting</a></div>
+    <div class="fcol"><h5>Company</h5><a href="#">About Velox</a><a href="#">Why Velox</a><a href="#">Regulation</a><a href="#">Awards</a><a href="#">Careers</a><a href="#">Partners/IB</a></div>
+    <div class="fcol"><h5>Support</h5><a href="#">Help Centre</a><a href="#">Live Chat</a><a href="#">Contact</a><a href="#">Academy</a><a href="#">Webinars</a><a href="#">Legal Docs</a></div>
+  </div>
+  <div class="fbot">
+    <div class="flegal"><strong style="color:var(--w80)">Risk Warning:</strong> CFDs are complex instruments with high risk of losing money rapidly due to leverage. 74–89% of retail accounts lose money when trading CFDs. Please ensure you understand how CFDs work and whether you can afford to take the high risk of losing money. Velox Global Ltd is authorised and regulated by the Financial Conduct Authority (FCA) No: 987654 and Abu Dhabi Global Market (ADGM) No: 000003456. Registered Office: DIFC Gate District, Dubai, UAE. Restricted: USA, Iran, North Korea and FATF blacklisted jurisdictions.</div>
+    <div class="fcopy">© 2026 Velox Global Ltd.<br>All Rights Reserved.</div>
+  </div>
+</footer>
+
+<!-- ═══════ AUTH MODAL ═══════ -->
+<div class="moverlay" id="m-auth">
+  <div class="mbox">
+    <button class="mclose" onclick="cm('auth')">✕</button>
+    <div class="mlogo">Vel<em>ox</em></div>
+    <div class="msub" id="m-sub">Welcome back. Sign in to your account.</div>
+    <div class="mtabs">
+      <div class="mtab on" id="mt-login" onclick="switchTab('login')">Sign In</div>
+      <div class="mtab" id="mt-signup" onclick="switchTab('signup')">Register</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="f-login">
+      <div class="fg"><label class="fl">Email Address</label><input class="fi2" type="email" placeholder="your@email.com" id="l-email"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi2" type="password" placeholder="••••••••" id="l-pass"></div>
+      <span class="forgotlink">Forgot password?</span>
+      <button class="btn btn-p" style="width:100%;justify-content:center;margin-bottom:14px" onclick="doLogin()">Sign In to Velox</button>
+      <div class="fdiv">or continue with</div>
+      <div class="soclogins">
+        <button class="slogin">🔵 Google</button>
+        <button class="slogin">🍎 Apple</button>
+        <button class="slogin">📘 Facebook</button>
+      </div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div id="f-signup" style="display:none">
+      <div class="steps">
+        <div class="sdot a" id="sd1"></div>
+        <div class="sdot" id="sd2"></div>
+        <div class="sdot" id="sd3"></div>
+        <span class="slabel">Step 1 of 3 — Personal Details</span>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl">First Name</label><input class="fi2" type="text" placeholder="John" id="r-fn"></div>
+        <div class="fg"><label class="fl">Last Name</label><input class="fi2" type="text" placeholder="Smith" id="r-ln"></div>
+      </div>
+      <div class="fg"><label class="fl">Email Address</label><input class="fi2" type="email" placeholder="your@email.com" id="r-email"></div>
+      <div class="fg"><label class="fl">Phone</label><input class="fi2" type="tel" placeholder="+971 50 000 0000" id="r-phone"></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi2" type="password" placeholder="Minimum 8 characters" id="r-pass"></div>
+      <div class="fg"><label class="fl">Account Currency</label>
+        <select class="fi2" id="r-curr">
+          <option>USD — US Dollar</option><option>EUR — Euro</option><option>GBP — British Pound</option>
+          <option>AED — UAE Dirham</option><option>SAR — Saudi Riyal</option>
+        </select>
+      </div>
+      <div class="fchk"><input type="checkbox" id="tos" checked><label for="tos">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>, confirm I am 18+ and aware of CFD trading risks.</label></div>
+      <button class="btn btn-p" style="width:100%;justify-content:center" onclick="doRegister()">Create Account & Get $10K Demo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ DEPOSIT MODAL ═══════ -->
+<div class="moverlay" id="m-deposit">
+  <div class="mbox">
+    <button class="mclose" onclick="cm('deposit')">✕</button>
+    <div class="mlogo">Vel<em>ox</em> — <span style="color:var(--gold);font-size:17px">Deposit</span></div>
+    <div class="msub" style="margin-bottom:18px">Select your payment method</div>
+    <div class="dmethods">
+      <div class="dm sel" onclick="selPay(this)"><div class="dm-icon">💳</div><div class="dm-name">Visa/Mastercard</div><div class="dm-time">Instant</div></div>
+      <div class="dm" onclick="selPay(this)"><div class="dm-icon">₿</div><div class="dm-name">Bitcoin</div><div class="dm-time">~10 min</div></div>
+      <div class="dm" onclick="selPay(this)"><div class="dm-icon">🔷</div><div class="dm-name">USDT</div><div class="dm-time">Instant</div></div>
+      <div class="dm" onclick="selPay(this)"><div class="dm-icon">🅿️</div><div class="dm-name">PayPal</div><div class="dm-time">Instant</div></div>
+      <div class="dm" onclick="selPay(this)"><div class="dm-icon">🌐</div><div class="dm-name">Neteller</div><div class="dm-time">Instant</div></div>
+      <div class="dm" onclick="selPay(this)"><div class="dm-icon">🏦</div><div class="dm-name">Bank Wire</div><div class="dm-time">1-3 days</div></div>
+    </div>
+    <div class="fg"><label class="fl">Amount (USD)</label><input class="fi2" type="number" placeholder="Min $10" value="500" id="dep-amt"></div>
+    <div class="fg"><label class="fl">Card Number</label><input class="fi2" type="text" placeholder="4111 1111 1111 1111" maxlength="19" id="dep-card"></div>
+    <div class="frow">
+      <div class="fg"><label class="fl">Expiry</label><input class="fi2" type="text" placeholder="MM/YY" maxlength="5"></div>
+      <div class="fg"><label class="fl">CVV</label><input class="fi2" type="text" placeholder="123" maxlength="4"></div>
+    </div>
+    <button class="btn btn-g" style="width:100%;justify-content:center;margin-top:6px" onclick="doDep()">🔒 Deposit Securely</button>
+    <p style="font-size:10px;color:var(--w50);text-align:center;margin-top:10px">🔒 256-bit SSL · PCI DSS Level 1 · Secured by Stripe</p>
+  </div>
+</div>
+
+<!-- ═══════ NOTIFICATION ═══════ -->
+<div class="notif" id="notif">
+  <div class="notif-ico" id="ni">✅</div>
+  <div><div class="notif-t" id="nt">Done</div><div class="notif-m" id="nm">Operation successful.</div></div>
+</div>
+
+<script>
+// ═══════════ CONFIG ═══════════
+const API = window.location.hostname === 'localhost' ? 'http://localhost:4000' : '';
+let authToken = localStorage.getItem('velox_token') || null;
+
+// ═══════════ PRICES ═══════════
+let prices = {
+  EURUSD:1.08432, GBPUSD:1.26784, USDJPY:149.234, XAUUSD:2314.50,
+  BTCUSD:67842, ETHUSD:3428.10, SOLUSD:142.30, US30:38420,
+  SPX500:5124, NAS100:17834, AAPL:192.62, TSLA:213.06, NVDA:874.50,
+  WTIUSD:78.42, XAGUSD:27.34, USDCHF:0.90124, AUDUSD:0.65342,
+};
+let openPrice = prices.EURUSD;
+
+// ═══════════ WEBSOCKET ═══════════
+function connectWS() {
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  const host  = location.hostname === 'localhost' ? 'localhost:4000' : location.host;
+  try {
+    const ws = new WebSocket(`${proto}://${host}`);
+    ws.onopen = () => {
+      if (authToken) ws.send(JSON.stringify({ type:'AUTH', token:authToken }));
+    };
+    ws.onmessage = (e) => {
+      const d = JSON.parse(e.data);
+      if (d.type === 'PRICES') { prices = d.prices; updateUI(); }
+      if (d.type === 'BALANCE_UPDATE') updateBalanceDisplay(d);
+      if (d.type === 'TRADE_OPENED')   showNotif('📈','Trade Opened',`${d.trade.symbol} ${d.trade.type.toUpperCase()} @ ${d.trade.openPrice.toFixed(5)}`);
+      if (d.type === 'TRADE_CLOSED')   showNotif('✅','Trade Closed',`P&L: ${d.trade.profit >= 0 ? '+' : ''}$${d.trade.profit.toFixed(2)}`);
+    };
+    ws.onclose = () => setTimeout(connectWS, 3000);
+  } catch { simulatePrices(); }
+}
+
+// Fallback local price simulation
+function simulatePrices() {
+  setInterval(() => {
+    for (const k in prices) {
+      const v = ['BTCUSD','ETHUSD','SOLUSD'].includes(k) ? 0.003 :
+                ['XAUUSD','US30','SPX500','NAS100'].includes(k) ? 0.002 : 0.0005;
+      prices[k] *= (1 + (Math.random()-.499) * v);
+    }
+    updateUI();
+  }, 600);
+}
+connectWS();
+
+// ═══════════ UI UPDATES ═══════════
+const chartPts = Array.from({length:50},()=>45 + Math.random()*30);
+
+function updateUI() {
+  // Nav prices
+  const eu = prices.EURUSD;
+  const el = document.getElementById('n1');
+  if(el){ el.textContent = eu.toFixed(5); el.classList.remove('pfl'); void el.offsetWidth; el.classList.add('pfl'); }
+  const g = document.getElementById('n2');
+  if(g) g.textContent = prices.XAUUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  const b = document.getElementById('n3');
+  if(b) b.textContent = Math.round(prices.BTCUSD).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
+
+  // Hero card
+  const cp = document.getElementById('cp');
+  if(cp){ cp.textContent = eu.toFixed(5); }
+  const bp = document.getElementById('bp'); if(bp) bp.textContent = (eu+.00005).toFixed(5);
+  const sp = document.getElementById('sp'); if(sp) sp.textContent = (eu-.00005).toFixed(5);
+
+  // Update chart
+  chartPts.push(50 - (eu - 1.08) * 5000);
+  if(chartPts.length > 50) chartPts.shift();
+  drawChart();
+
+  // Update ticker cells
+  const cells = document.querySelectorAll('.sname');
+  // (ticker is static HTML after initial build, prices handled separately)
+}
+
+function drawChart() {
+  const W=380,H=90;
+  const mn = Math.min(...chartPts), mx = Math.max(...chartPts);
+  const range = mx - mn || 1;
+  const pts = chartPts.map((v,i) => {
+    const x = (i/(chartPts.length-1))*W;
+    const y = H - ((v-mn)/range)*(H-8) - 4;
+    return [x,y];
+  });
+  const d = pts.map((p,i)=>(i===0?`M${p[0].toFixed(1)},${p[1].toFixed(1)}`:`L${p[0].toFixed(1)},${p[1].toFixed(1)}`)).join(' ');
+  const fill = d + ` L${W},${H} L0,${H} Z`;
+  const line = document.getElementById('cline');
+  const fill_ = document.getElementById('cfill');
+  const dot   = document.getElementById('cdot');
+  if(line) line.setAttribute('d',d);
+  if(fill_) fill_.setAttribute('d',fill);
+  if(dot){ dot.setAttribute('cx',pts[pts.length-1][0]); dot.setAttribute('cy',pts[pts.length-1][1]); }
+}
+
+// ═══════════ TICKER STRIP ═══════════
+const TICKER_DATA = [
+  {n:'EUR/USD',p:()=>prices.EURUSD.toFixed(5),chg:'+0.12%',up:true},
+  {n:'GBP/USD',p:()=>prices.GBPUSD.toFixed(5),chg:'-0.08%',up:false},
+  {n:'USD/JPY',p:()=>prices.USDJPY.toFixed(3),chg:'+0.34%',up:true},
+  {n:'XAU/USD',p:()=>prices.XAUUSD.toFixed(2),chg:'+0.88%',up:true},
+  {n:'BTC/USD',p:()=>Math.round(prices.BTCUSD).toLocaleString(),chg:'-0.43%',up:false},
+  {n:'ETH/USD',p:()=>prices.ETHUSD.toFixed(2),chg:'+1.24%',up:true},
+  {n:'US30',p:()=>Math.round(prices.US30).toLocaleString(),chg:'+0.55%',up:true},
+  {n:'NAS100',p:()=>prices.NAS100.toFixed(0),chg:'-0.22%',up:false},
+  {n:'AAPL',p:()=>prices.AAPL.toFixed(2),chg:'+3.68%',up:true},
+  {n:'NVDA',p:()=>prices.NVDA.toFixed(2),chg:'+2.14%',up:true},
+  {n:'XAG/USD',p:()=>prices.XAGUSD.toFixed(3),chg:'+0.66%',up:true},
+  {n:'WTI OIL',p:()=>prices.WTIUSD.toFixed(2),chg:'-0.92%',up:false},
+  {n:'SOL/USD',p:()=>prices.SOLUSD.toFixed(2),chg:'+4.21%',up:true},
+];
+function buildTicker(){
+  const t=document.getElementById('ticker');
+  const html=[...TICKER_DATA,...TICKER_DATA].map(d=>`
+    <div class="scell">
+      <span class="sname">${d.n}</span>
+      <span class="sprice">${d.p()}</span>
+      <span class="schg ${d.up?'cup':'cdn'}">${d.chg}</span>
+    </div>`).join('');
+  t.innerHTML=html;
+}
+buildTicker();
+
+// ═══════════ ORDER PANEL ═══════════
+function setTab(t){
+  ['buy','sell','limit'].forEach(x=>{
+    const el=document.getElementById(`ot-${x}`);
+    if(el) el.className='otab'+(t===x?(x==='buy'?' abuy':x==='sell'?' asell':' abuy'):'');
+  });
+}
+
+function po(side){
+  const sym='EUR/USD';
+  const price=side==='buy'?(prices.EURUSD+.00005):(prices.EURUSD-.00005);
+  showNotif(side==='buy'?'📈':'📉',`${side.toUpperCase()} ${sym}`,`Executed @ ${price.toFixed(5)} · 0.1 lots`);
+}
+
+// ═══════════ MODALS ═══════════
+function om(type){
+  if(type==='deposit'){document.getElementById('m-deposit').classList.add('on');return}
+  const mo=document.getElementById('m-auth');
+  mo.classList.add('on');
+  if(type==='signup'||type==='demo') switchTab('signup');
+  else switchTab('login');
+}
+function cm(type){
+  if(type==='deposit'){document.getElementById('m-deposit').classList.remove('on');return}
+  document.getElementById('m-auth').classList.remove('on');
+}
+function switchTab(t){
+  const lt=document.getElementById('mt-login'), st=document.getElementById('mt-signup');
+  const lf=document.getElementById('f-login'), sf=document.getElementById('f-signup');
+  const sub=document.getElementById('m-sub');
+  if(t==='login'){
+    lt.classList.add('on');st.classList.remove('on');
+    lf.style.display='block';sf.style.display='none';
+    sub.textContent='Welcome back. Sign in to your account.';
+  } else {
+    st.classList.add('on');lt.classList.remove('on');
+    sf.style.display='block';lf.style.display='none';
+    sub.textContent='Create your account in under 5 minutes.';
+  }
+}
+
+// ═══════════ AUTH ═══════════
+async function doLogin(){
+  const email=document.getElementById('l-email').value;
+  const pass=document.getElementById('l-pass').value;
+  if(!email||!pass){showNotif('⚠️','Missing Fields','Please enter email and password.');return}
+  try {
+    const r = await fetch(`${API}/api/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+    const d = await r.json();
+    if(d.success){ authToken=d.token; localStorage.setItem('velox_token',d.token); cm('auth'); showNotif('✅','Signed In','Redirecting to your dashboard...'); setTimeout(()=>location.href='dashboard.html',1500); }
+    else showNotif('❌','Login Failed',d.error||'Check your credentials.');
+  } catch { showNotif('❌','Error','Could not connect to server. Check your internet.'); }
+}
+
+async function doRegister(){
+  const fn=document.getElementById('r-fn').value;
+  const ln=document.getElementById('r-ln').value;
+  const email=document.getElementById('r-email').value;
+  const phone=document.getElementById('r-phone').value;
+  const pass=document.getElementById('r-pass').value;
+  const curr=document.getElementById('r-curr').value.split(' ')[0];
+  if(!fn||!ln||!email||!pass){showNotif('⚠️','Missing Fields','Please fill in all required fields.');return}
+  if(pass.length<8){showNotif('⚠️','Weak Password','Minimum 8 characters required.');return}
+  try {
+    const r = await fetch(`${API}/api/auth/register`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({firstName:fn,lastName:ln,email,phone,password:pass,currency:curr})});
+    const d = await r.json();
+    if(d.success){ authToken=d.token; localStorage.setItem('velox_token',d.token); cm('auth'); showNotif('🎉','Account Created!','Welcome to Velox! $10,000 demo credited.'); setTimeout(()=>location.href='dashboard.html',1800); }
+    else showNotif('❌','Registration Failed',d.error||'Please try again.');
+  } catch { showNotif('❌','Error','Cannot connect. Is the server running?'); }
+}
+
+// ═══════════ DEPOSIT ═══════════
+function selPay(el){ document.querySelectorAll('.dm').forEach(d=>d.classList.remove('sel')); el.classList.add('sel'); }
+
+async function doDep(){
+  const amt = parseFloat(document.getElementById('dep-amt').value);
+  if(!amt||amt<10){showNotif('⚠️','Invalid Amount','Minimum deposit is $10.');return}
+  try {
+    // In production: create Stripe intent & use Stripe.js to collect card
+    // For demo: confirm directly
+    const r = await fetch(`${API}/api/deposits/confirm`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${authToken}`},body:JSON.stringify({accountId:'demo',amount:amt,method:'card'})});
+    const d = await r.json();
+    cm('deposit');
+    showNotif('💰','Deposit Successful!',`$${amt.toFixed(2)} credited to your account.`);
+  } catch { showNotif('❌','Payment Error','Check Stripe API key in .env file.'); }
+}
+
+// ═══════════ NOTIFICATION ═══════════
+let nt;
+function showNotif(icon,title,msg){
+  const el=document.getElementById('notif');
+  document.getElementById('ni').textContent=icon;
+  document.getElementById('nt').textContent=title;
+  document.getElementById('nm').textContent=msg;
+  el.classList.add('show');
+  clearTimeout(nt);
+  nt=setTimeout(()=>el.classList.remove('show'),4200);
+}
+
+// ═══════════ SCROLL ═══════════
+function ss(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}); }
+window.addEventListener('scroll',()=>{ const n=document.querySelector('nav'); n.style.background=scrollY>60?'rgba(4,9,15,.99)':'rgba(4,9,15,.88)'; });
+
+// Overlay click-to-close
+['m-auth','m-deposit'].forEach(id=>{ document.getElementById(id)?.addEventListener('click',function(e){if(e.target===this)this.classList.remove('on')}); });
+
+// ═══════════ SCROLL-IN ANIMATIONS ═══════════
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+},{threshold:.08});
+document.querySelectorAll('.mc,.fc,.ac,.tc,.pc,.tcard,.accard,.tocard').forEach(el=>{
+  el.style.opacity='0'; el.style.transform='translateY(18px)';
+  el.style.transition='opacity .5s ease, transform .5s ease, border-color .3s, box-shadow .3s';
+  obs.observe(el);
+});
+
+// Kick off
+setTimeout(()=>showNotif('👋','Welcome to Velox','Open a free $10K demo and start trading in minutes.'),2500);
+</script>
+</body>
+</html>
