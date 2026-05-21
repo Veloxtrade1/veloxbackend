@@ -481,7 +481,7 @@ tr:hover td{background:var(--w03)}
 </div>
 
 <script>
-const API = location.hostname==='localhost'?'http://localhost:4000':'';
+const API = location.hostname==='localhost'?'http://localhost:4000':'https://veloxbackend-production.up.railway.app';
 let token = localStorage.getItem('velox_token');
 let currentSym='EURUSD', orderSide='buy', chartType='c', tfMin=1;
 let openTrades=[], currentAccounts=[], currentAcctId=null;
