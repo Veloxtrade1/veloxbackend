@@ -38,7 +38,7 @@ const db = {
 };
 
 // ── MIDDLEWARE ───────────────────────────────────────────────
-app.use(cors({ origin: '*', credentials: true }));
+app.use(cors({ origin: ['https://veloxtrade.netlify.app', 'http://localhost:3000', 'http://localhost:4000', /.netlify.app$/, /.railway.app$/], credentials: true }));
 app.use(express.json());
 // API health endpoints
 app.get('/', (req, res) => res.json({ status: 'VELOX API Running', version: '1.0.0', docs: '/api', timestamp: new Date().toISOString() }));
