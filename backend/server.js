@@ -39,7 +39,7 @@ const db = {
 
 // ── MIDDLEWARE ───────────────────────────────────────────────
 app.use(cors({ origin: ['https://veloxtrade.netlify.app', 'http://localhost:3000', 'http://localhost:4000', /.netlify.app$/, /.railway.app$/], credentials: true }));
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 // API health endpoints
 app.get('/', (req, res) => res.json({ status: 'VELOX API Running', version: '1.0.0', docs: '/api', timestamp: new Date().toISOString() }));
 app.get('/health', (req, res) => res.json({ healthy: true }));
@@ -573,7 +573,7 @@ wss.on('connection', (ws, req) => {
 
 // ── START ────────────────────────────────────────────────────
 server.listen(PORT, () => {
-  console.log(`\n🚀 VELOX Server running on port ${PORT}`);
+  console.log(`\n🚀 VELOX API Server running`);
   console.log(`   WebSocket: ws://localhost:${PORT}`);
   console.log(`   API:       http://localhost:${PORT}/api`);
   console.log(`   Frontend:  http://localhost:${PORT}\n`);
