@@ -14,7 +14,7 @@ const bcrypt      = require('bcryptjs');
 const jwt         = require('jsonwebtoken');
 const stripe      = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_REPLACE_WITH_REAL_KEY');
 const { Pool }    = require('pg');
-const path        = require('path');
+// path not needed (no static file serving)
 const crypto      = require('crypto');
 
 const app    = express();
@@ -40,7 +40,9 @@ const db = {
 // ── MIDDLEWARE ───────────────────────────────────────────────
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../frontend')));
+// API health endpoints
+app.get('/', (req, res) => res.json({ status: 'VELOX API Running', version: '1.0.0', docs: '/api', timestamp: new Date().toISOString() }));
+app.get('/health', (req, res) => res.json({ healthy: true }));
 
 // ── AUTH MIDDLEWARE ──────────────────────────────────────────
 function authMiddleware(req, res, next) {
