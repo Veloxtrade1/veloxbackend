@@ -362,18 +362,20 @@ const wss    = new WebSocket.Server({ server });
 const PORT       = process.env.PORT || 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'velox_dev_secret_change_in_production';
 
-app.use(cors({
-  origin: [
-    'https://veloxtrade.netlify.app',
-    'https://veloxplatform.netlify.app',
-    /\.netlify\.app$/,
-    'http://localhost:3000',
-    'http://localhost:4000'
-  ],
-  credentials: true,
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization']
-}));
+// CORS — allow all Netlify deployments + localhost
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  // Allow any netlify.app subdomain, localhost, or no origin (server-to-server)
+  if (!origin || origin.includes('netlify.app') || origin.includes('localhost') || origin.includes('railway.app')) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept,Origin,X-Requested-With');
+  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  next();
+});
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 
 // ── AUTH MIDDLEWARE ──────────────────────────────────────────
@@ -739,4 +741,3 @@ connectMongo().then(connected => {
     console.log(`   Order Books: ${Object.keys(orderBook).length}\n`);
   });
 });
- 
