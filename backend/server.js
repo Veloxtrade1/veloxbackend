@@ -739,3 +739,4 @@ connectMongo().then(connected => {
     console.log(`   Order Books: ${Object.keys(orderBook).length}\n`);
   });
 });
+ 
